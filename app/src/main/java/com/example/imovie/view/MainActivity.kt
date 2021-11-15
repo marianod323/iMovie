@@ -1,7 +1,6 @@
-package com.example.imovie
+package com.example.imovie.view
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -9,12 +8,19 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import com.example.imovie.R
 import com.example.imovie.databinding.ActivityMainBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private var isFABOpen = false
+
+    lateinit var fab: FloatingActionButton
+    lateinit var fab2: FloatingActionButton
+    lateinit var fab3: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,14 +30,37 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
+        fab = binding.fab
+        fab2 = binding.fabEdit
+        fab3 = binding.fabAdd
+
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        binding.fab.setOnClickListener {
+            if (!isFABOpen) {
+                showFABMenu()
+            } else {
+                closeFABMenu()
+            }
         }
+
+        binding.fabAdd.setOnClickListener {
+
+        }
+    }
+
+    private fun showFABMenu() {
+        isFABOpen = true
+        fab2.animate().translationY(-resources.getDimension(R.dimen.standard_55))
+        fab3.animate().translationY(-resources.getDimension(R.dimen.standard_105))
+    }
+
+    private fun closeFABMenu() {
+        isFABOpen = false
+        fab2.animate().translationY(0F)
+        fab3.animate().translationY(0F)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
