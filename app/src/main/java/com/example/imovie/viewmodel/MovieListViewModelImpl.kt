@@ -1,4 +1,4 @@
 package com.example.imovie.viewmodel
 
-class MovieListViewModelImpl : MovieListViewModel {
+class MovieListViewModelImpl {
 }

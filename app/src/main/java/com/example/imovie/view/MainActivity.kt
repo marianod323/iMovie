@@ -1,19 +1,23 @@
 package com.example.imovie.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.example.imovie.R
 import com.example.imovie.databinding.ActivityMainBinding
+import com.example.imovie.viewmodel.MovieBoxViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    private val movieBoxViewModel: MovieBoxViewModel by viewModels()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private var isFABOpen = false
@@ -34,9 +38,9 @@ class MainActivity : AppCompatActivity() {
         fab2 = binding.fabEdit
         fab3 = binding.fabAdd
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        //val navController = findNavController(R.id.nav_host_fragment_content_main)
+//        appBarConfiguration = AppBarConfiguration(navController.graph)
+//        setupActionBarWithNavController(navController, appBarConfiguration)
 
         binding.fab.setOnClickListener {
             if (!isFABOpen) {
@@ -46,8 +50,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.fabAdd.setOnClickListener {
+//        movieBoxViewModel.movies.observe(this, Observer {
+//            Log.d("xxxx", it.size.toString())
+//        })
 
+        binding.fabAdd.setOnClickListener {
+            movieBoxViewModel.getMovies()
         }
     }
 
@@ -79,9 +87,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
-    }
+//    override fun onSupportNavigateUp(): Boolean {
+//        val navController = findNavController(R.id.nav_host_fragment_content_main)
+//        return navController.navigateUp(appBarConfiguration)
+//                || super.onSupportNavigateUp()
+//    }
 }
